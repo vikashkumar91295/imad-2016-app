@@ -6,7 +6,8 @@ var app = express();
 app.use(morgan('combined'));
 
 
-var articleOne= {
+var article = {
+  'article-one': {
     title: 'Article One | Vikash Kumar',
     heading: 'Article One',
     date: 'Sept. 25,2016',
@@ -26,7 +27,29 @@ var articleOne= {
                  This is the content for my first article.I vikash kumar omner of microsoft and all facebook credentials comes under me.
                  This is the content for my first article.I vikash kumar omner of microsoft and all facebook credentials comes under me.
             </p>`
-};
+},
+  'article-two': {
+    title: 'Article Two | Vikash Kumar',
+    heading: 'Article Two',
+    date: 'Sept. 10,2016',
+    content:`
+            <p>
+                 This is the content for my second article.I vikash kumar omner of microsoft and all facebook credentials comes under me.
+                
+            </p>
+            `},
+  'article-three': { 
+    title: 'Article Three | Vikash Kumar',
+    heading: 'Article Three',
+    date: 'Sept. 15,2016',
+    content:`
+            <p>
+                 This is the content for my third article.I vikash kumar omner of microsoft and all facebook credentials comes under me.
+                
+            </p>`
+         }   
+}; 
+
 function createTemplate (data) {
     var title=data.title;
     var date=data.date;
@@ -68,8 +91,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one',function(req,res){
-  res.send(createTemplate(articleOne));
+app.get('/:articleName',function(req,res){
+    //articleName==article-one
+    //articles[articleName] == content object for article one
+    var articleName= req.params.articleNme;
+    res.send(createTemplate(articles[articleName]));
 });
 
 app.get('/article-two',function(req,res){
